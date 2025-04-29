@@ -35,6 +35,11 @@ planner_configs:
     type: geometric::RRT
     range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
     goal_bias: 0.05  # When close to goal select goal, with this probability? default: 0.05
+  RRTcustom:
+    type: geometric::RRT
+    optimization_objective: CustomObjective
+    range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
+    goal_bias: 0.05  # When close to goal select goal, with this probability? default: 0.05
   RRTConnect:
     type: geometric::RRTConnect
     range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
@@ -43,6 +48,12 @@ planner_configs:
     range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
     goal_bias: 0.05  # When close to goal select goal, with this probability? default: 0.05
     delay_collision_checking: 1  # Stop collision checking as soon as C-free parent found. default 1
+  RRTstarCustom:
+    type: geometric::RRTstar
+    optimization_objective: CustomObjective
+    range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
+    goal_bias: 0.05  # When close to goal select goal, with this probability? default: 0.05
+    delay_collision_checking: 1  # Stop collision checking as soon as C-free parent found. default
   TRRT:
     type: geometric::TRRT
     range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
@@ -166,6 +177,8 @@ planner_configs:
     find_approximate_solutions: 0  # track approximate solutions (1) or not (0). Default: 0
 $(arg arm_id)_arm: &arm_config
   planner_configs:
+    - RRTstarCustom
+    - RRTcustom
     - AnytimePathShortening
     - SBL
     - EST
@@ -198,6 +211,8 @@ $(arg arm_id)_arm: &arm_config
 $(arg arm_id)_manipulator: *arm_config
 $(arg arm_id)_hand:
   planner_configs:
+    - RRTstarCustom
+    - RRTcustom
     - AnytimePathShortening
     - SBL
     - EST
